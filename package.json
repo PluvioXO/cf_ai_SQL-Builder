@@ -1,0 +1,20 @@
+{
+  "name": "sql-query-builder",
+  "version": "1.0.0",
+  "description": "AI-powered SQL Query Builder using Cloudflare's full stack",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "frontend:dev": "cd frontend && npm run dev",
+    "frontend:build": "cd frontend && npm run build",
+    "pages:deploy": "wrangler pages deploy frontend/dist"
+  },
+  "dependencies": {
+    "@cloudflare/workers-types": "^4.20241127.0"
+  },
+  "devDependencies": {
+    "wrangler": "^3.90.0",
+    "typescript": "^5.3.3"
+  }
+}

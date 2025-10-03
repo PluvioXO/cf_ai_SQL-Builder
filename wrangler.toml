@@ -1,0 +1,31 @@
+name = "sql-query-builder"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+compatibility_flags = ["nodejs_compat"]
+
+[dev]
+port = 8787
+
+# Workers AI Binding
+[ai]
+binding = "AI"
+
+# Durable Objects for conversation state
+[[durable_objects.bindings]]
+name = "CONVERSATIONS"
+class_name = "ConversationState"
+
+[[migrations]]
+tag = "v1"
+new_classes = ["ConversationState"]
+
+# KV for caching schema definitions
+[[kv_namespaces]]
+binding = "SCHEMA_CACHE"
+id = "preview_id"
+
+# Workflows binding
+[[workflows]]
+binding = "WORKFLOW"
+name = "sql-generation-workflow"
+class_name = "SqlGenerationWorkflow"

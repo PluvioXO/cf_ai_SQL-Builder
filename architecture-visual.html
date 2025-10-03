@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SQL Query Builder - Architecture Visualization</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      padding: 40px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fff;
+      font-size: 36px;
+    }
+
+    .subtitle {
+      text-align: center;
+      margin-bottom: 60px;
+      color: #aaa;
+      font-size: 18px;
+    }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 60px;
+    }
+
+    .component {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .component:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+    }
+
+    .component-number {
+      font-size: 48px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      opacity: 0.8;
+    }
+
+    .component-name {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    .component-desc {
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .component-features {
+      list-style: none;
+      font-size: 13px;
+    }
+
+    .component-features li {
+      padding: 5px 0;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .component-features li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #4ade80;
+      font-weight: bold;
+    }
+
+    .flow {
+      background: #16213e;
+      border-radius: 16px;
+      padding: 40px;
+      margin-bottom: 60px;
+    }
+
+    .flow-title {
+      font-size: 28px;
+      margin-bottom: 30px;
+      text-align: center;
+      color: #fff;
+    }
+
+    .flow-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .flow-step {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding: 20px;
+      background: rgba(102, 126, 234, 0.1);
+      border-radius: 12px;
+      border-left: 4px solid #667eea;
+    }
+
+    .step-number {
+      font-size: 32px;
+      font-weight: bold;
+      color: #667eea;
+      min-width: 50px;
+    }
+
+    .step-content {
+      flex: 1;
+    }
+
+    .step-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #fff;
+    }
+
+    .step-desc {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .step-component {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(102, 126, 234, 0.3);
+      border-radius: 6px;
+      font-size: 12px;
+      margin-top: 8px;
+      color: #a8b9ff;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 60px;
+    }
+
+    .stat {
+      background: #16213e;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: bold;
+      color: #667eea;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: #aaa;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1200px) {
+      .architecture {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .architecture {
+        grid-template-columns: 1fr;
+      }
+      
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🤖 SQL Query Builder</h1>
+    <p class="subtitle">A Complete Cloudflare AI Stack Demonstration</p>
+
+    <div class="architecture">
+      <div class="component">
+        <div class="component-number">#1</div>
+        <div class="component-name">🤖 Workers AI</div>
+        <div class="component-desc">
+          Llama 3.3 model for intelligent SQL generation, explanations, and optimizations
+        </div>
+        <ul class="component-features">
+          <li>Natural language → SQL</li>
+          <li>Query explanations</li>
+          <li>Optimization tips</li>
+          <li>Error correction</li>
+          <li>Context-aware</li>
+        </ul>
+      </div>
+
+      <div class="component">
+        <div class="component-number">#2</div>
+        <div class="component-name">⚙️ Workflows</div>
+        <div class="component-desc">
+          5-step orchestration pipeline with validation and automatic retry logic
+        </div>
+        <ul class="component-features">
+          <li>Generate SQL</li>
+          <li>Validate syntax</li>
+          <li>Retry on error</li>
+          <li>Create explanation</li>
+          <li>Suggest optimizations</li>
+        </ul>
+      </div>
+
+      <div class="component">
+        <div class="component-number">#3</div>
+        <div class="component-name">🖥️ Cloudflare Pages</div>
+        <div class="component-desc">
+          Beautiful chat interface with real-time SQL generation and syntax highlighting
+        </div>
+        <ul class="component-features">
+          <li>Chat interface</li>
+          <li>Syntax highlighting</li>
+          <li>Schema visualization</li>
+          <li>Example queries</li>
+          <li>Responsive design</li>
+        </ul>
+      </div>
+
+      <div class="component">
+        <div class="component-number">#4</div>
+        <div class="component-name">💾 Durable Objects</div>
+        <div class="component-desc">
+          Persistent conversation memory enabling contextual follow-up questions
+        </div>
+        <ul class="component-features">
+          <li>Store messages</li>
+          <li>Maintain context</li>
+          <li>Follow-up support</li>
+          <li>Per-user isolation</li>
+          <li>Auto-persistence</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="flow">
+      <div class="flow-title">📊 User Request Flow</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <div class="step-title">User Input</div>
+            <div class="step-desc">User types: "Show me all orders from last month over $100"</div>
+            <span class="step-component">Pages (Frontend)</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <div class="step-title">Store Message</div>
+            <div class="step-desc">Worker stores user message in conversation history</div>
+            <span class="step-component">Durable Objects</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <div class="step-title">Trigger Workflow</div>
+            <div class="step-desc">Worker initiates SQL generation workflow with message + history</div>
+            <span class="step-component">Workflows</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">4</div>
+          <div class="step-content">
+            <div class="step-title">Generate SQL</div>
+            <div class="step-desc">AI converts natural language to SQL query</div>
+            <span class="step-component">Workers AI</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">5</div>
+          <div class="step-content">
+            <div class="step-title">Validate & Retry</div>
+            <div class="step-desc">Check syntax, security. Retry with feedback if invalid</div>
+            <span class="step-component">Workflows</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">6</div>
+          <div class="step-content">
+            <div class="step-title">Generate Explanation</div>
+            <div class="step-desc">AI creates plain English explanation of the query</div>
+            <span class="step-component">Workers AI</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">7</div>
+          <div class="step-content">
+            <div class="step-title">Suggest Optimizations</div>
+            <div class="step-desc">AI provides performance improvement tips</div>
+            <span class="step-component">Workers AI</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">8</div>
+          <div class="step-content">
+            <div class="step-title">Store Response</div>
+            <div class="step-desc">Save assistant response for conversation context</div>
+            <span class="step-component">Durable Objects</span>
+          </div>
+        </div>
+
+        <div class="flow-step">
+          <div class="step-number">9</div>
+          <div class="step-content">
+            <div class="step-title">Display Result</div>
+            <div class="step-desc">Show SQL query, explanation, and optimization tips</div>
+            <span class="step-component">Pages (Frontend)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-number">4</div>
+        <div class="stat-label">Cloudflare Components</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">5</div>
+        <div class="stat-label">Workflow Steps</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">~3s</div>
+        <div class="stat-label">Avg Response Time</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-number">∞</div>
+        <div class="stat-label">Scalability</div>
+      </div>
+    </div>
+
+    <div class="footer">
+      Built with ❤️ using Cloudflare's AI Stack<br>
+      Workers AI • Workflows • Durable Objects • Cloudflare Pages
+    </div>
+  </div>
+</body>
+</html>
