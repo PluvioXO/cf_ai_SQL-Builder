@@ -3,7 +3,7 @@
 # SQL Query Builder - Setup Script
 # This script will help you set up the project quickly
 
-echo "🚀 SQL Query Builder - Cloudflare AI Stack"
+echo "SQL Query Builder - Cloudflare AI Stack"
 echo "=========================================="
 echo ""
 
@@ -17,12 +17,12 @@ fi
 
 # Install dependencies
 echo ""
-echo "📦 Installing dependencies..."
+echo "Installing dependencies..."
 npm install
 
 # Check if logged in to Cloudflare
 echo ""
-echo "🔐 Checking Cloudflare authentication..."
+echo "Checking Cloudflare authentication..."
 if npx wrangler whoami &> /dev/null; then
     echo "✅ Already logged in to Cloudflare"
 else
@@ -32,7 +32,7 @@ fi
 
 # Create KV namespace
 echo ""
-echo "🗄️ Creating KV namespace for schema cache..."
+echo "Creating KV namespace for schema cache..."
 KV_OUTPUT=$(npx wrangler kv:namespace create SCHEMA_CACHE 2>&1)
 echo "$KV_OUTPUT"
 
@@ -53,11 +53,11 @@ else
 fi
 
 echo ""
-echo "✨ Setup complete!"
+echo "Setup complete!"
 echo ""
 echo "Next steps:"
 echo "1. Update wrangler.toml with your KV namespace ID (if not already done)"
 echo "2. Run 'npm run dev' to start the development server"
 echo "3. Open http://localhost:8787 in your browser"
 echo ""
-echo "Happy coding! 🎉"
+echo "Happy coding!"

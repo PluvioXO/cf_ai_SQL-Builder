@@ -98,4 +98,62 @@ npm run pages:deploy  # Deploy Pages
 
 ---
 
+## Prompts used:
+
+### Initial prompt: 
+```
+SQL Query Builder - Cloudflare Architecture
+
+Required Components:
+
+1. LLM - Workers AI with Llama 3.3
+- Converts natural language → SQL queries
+- Explains query logic
+- Suggests optimizations
+
+2. Workflow/Coordination - Cloudflare Workflows or Durable Objects**
+- Workflow: Multi-step query generation → validation → explanation
+- Orchestrate: parse user intent → generate query → validate syntax → format output
+- Handle retries if LLM generates invalid SQL
+
+3. User Input - Cloudflare Pages + Realtime
+- Pages: Host the frontend chat interface
+- Realtime: Enable live chat where users type questions and see SQL generated in real-time
+- Could add voice input for bonus points
+
+4. Memory/State - Durable Objects or KV
+- Durable Objects: Store conversation history per user
+- Remember database schema context across messages
+- Track previous queries in the session for follow-up questions like "make that query faster"
+
+ Example User Flow:
+
+```
+User: "Show me all orders from last month over $100"
+↓
+[Durable Object stores context]
+↓
+[Workflow triggers LLM via Workers AI]
+↓
+[LLM generates SQL]
+↓
+SQL: SELECT * FROM orders 
+     WHERE order_date >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+     AND total > 100
+↓
+[Returns with explanation via Realtime]
+```
+
+Please use React for front end and https://reactbits.dev for components!
+```
+
+### Second Prompt: 
+```
+include a bit in the top explaining how this satisfies using cloudfaire, specifically which parts of the cloudflaire ai stack. Also fix the text formatting as it goes outside the boxs on example queireis and database schema and remove icons from next to SQL query builder i dont like the icon next to it at the top 
+```
+
+From here I iterated manually just changing small things until I felt satisfied with the product for a first iteration release :) 
+
+Hope you liked it! 
+
 
